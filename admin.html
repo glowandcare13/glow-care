@@ -196,51 +196,64 @@
   let products = [], heroSlides = [], coupons = [], categories = [];
 
   // ----- Smart Import -----
-  window.importProduct = () => {
-    const designation = document.getElementById('importDesignation').value.trim();
-    const image = document.getElementById('importImage').value.trim();
-    const category = document.getElementById('importCategory').value;
-    const stock = parseInt(document.getElementById('importStock').value) || 0;
+// ----- Smart Import (free text, price at the end) -----
+window.importProduct = () => {
+  const designation = document.getElementById('importDesignation').value.trim();
+  const image = document.getElementById('importImage').value.trim();
+  const category = document.getElementById('importCategory').value;
+  const stock = parseInt(document.getElementById('importStock').value) || 0;
 
-    if (!designation) return alert('Veuillez coller la désignation.');
+  if (!designation) return alert('Veuillez coller la désignation.');
 
-    // Parse designation: "Brand - Name - Description - Price"
-    const parts = designation.split(' - ').map(s => s.trim());
-    if (parts.length < 3) return alert('Format invalide. Utilisez : Marque - Nom - Description - Prix');
+  // Split into lines, remove empty lines and lines that are just "."
+  const lines = designation.split(/\r?\n/).map(l => l.trim()).filter(l => l !== '' && l !== '.');
 
-    const pricePart = parts[parts.length - 1];
-    const priceMatch = pricePart.match(/(\d+)/);
-    const price = priceMatch ? parseInt(priceMatch[1]) : 0;
+  if (lines.length === 0) return alert('Aucun contenu valide.');
 
-    let brand = parts[0] || '';
-    let name = parts[1] || '';
-    let description = parts.slice(2, parts.length - 1).join(' - ') || '';
-
-    // If only 3 parts, maybe no separate description, just name and price
-    if (parts.length === 3) {
-      name = parts[1];
-      description = '';
+  // Search for price in the last line that contains a number
+  let price = 0;
+  let priceLineIndex = -1;
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const match = lines[i].match(/(\d+)/);   // first number found
+    if (match) {
+      price = parseInt(match[1]);
+      priceLineIndex = i;
+      break;
     }
+  }
+  if (priceLineIndex === -1) return alert('Aucun prix trouvé dans la désignation.');
 
-    if (!name) return alert('Impossible de déterminer le nom du produit.');
+  // Everything except the price line is the description + name
+  const contentLines = lines.slice(0, priceLineIndex);
+  if (contentLines.length === 0) return alert('Aucun nom de produit trouvé.');
 
-    const newProduct = {
-      image: image,
-      brand: brand,
-      name: name,
-      description: description,
-      category: category,
-      price: price,
-      stock: stock
-    };
+  // First line = product name
+  const name = contentLines[0];
+  // Remaining lines = description (joined with line breaks)
+  const description = contentLines.slice(1).join('\n');
 
-    push(productsRef, newProduct);
-    // Clear fields
-    document.getElementById('importDesignation').value = '';
-    document.getElementById('importImage').value = '';
-    document.getElementById('importStock').value = '';
-    alert('✅ Produit ajouté !');
+  // Brand? If you want a separate brand field, you could parse the first word,
+  // but here we leave brand empty so the user can fill it in the full form later.
+  const brand = '';   // or leave as you wish
+
+  const newProduct = {
+    image: image,
+    brand: brand,
+    name: name,
+    description: description,
+    category: category,
+    price: price,
+    stock: stock
   };
+
+  push(productsRef, newProduct);
+
+  // Clear the form
+  document.getElementById('importDesignation').value = '';
+  document.getElementById('importImage').value = '';
+  document.getElementById('importStock').value = '';
+  alert('✅ Produit ajouté !');
+};
 
   // ----- Products -----
   window.showAddProduct = (id = null) => {
