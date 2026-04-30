@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
 <title>Glow and Care - Cosmétiques</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -17,6 +17,7 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--background);
   transition: background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
 }
 .btn-primary { background-color: var(--primary); transition: all 0.3s ease; }
 .btn-primary:hover { filter: brightness(0.9); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
@@ -35,6 +36,13 @@ body {
 .drag-handle { cursor: grab; }
 .drag-handle:active { cursor: grabbing; }
 .sortable-ghost { opacity: 0.4; }
+/* Android touch optimizations */
+button, .cat-item, .product-card, .admin-tab, .nav-link {
+  touch-action: manipulation;
+}
+input, select, textarea {
+  font-size: 16px; /* Prevents zoom on focus in mobile */
+}
 </style>
 </head>
 <body class="text-gray-800">
@@ -69,7 +77,7 @@ body {
         <div class="flex items-center gap-3">
           <select id="langSwitcher" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:ring-2 focus:ring-pink-300 outline-none"><option value="fr">FR</option><option value="ar">AR</option><option value="en">EN</option></select>
           <button id="cartBtn" class="relative"><i class="fa-solid fa-bag-shopping text-2xl hover:text-primary transition"></i><span id="cartCount" class="absolute -top-2 -right-2 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span></button>
-          <button id="mobileMenuBtn" class="md:hidden"><i class="fa-solid fa-bars text-2xl"></i></button>
+          <button id="mobileMenuBtn" class="md:block hidden"><i class="fa-solid fa-bars text-2xl"></i></button>
         </div>
       </div>
     </div>
@@ -112,13 +120,26 @@ body {
     </div>
   </main>
 
-  <!-- Cart Sidebar -->
+  <!-- Cart Sidebar (reorganized: coupon section moved below total) -->
   <div id="cartSidebar" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-[80] flex flex-col">
     <div class="p-6 border-b flex justify-between items-center"><h3 class="text-2xl font-bold" data-i18n="cart">Panier</h3><button id="closeCart"><i class="fa-solid fa-xmark text-2xl"></i></button></div>
     <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
     <div class="border-t p-6 space-y-4">
-      <div><label class="block text-sm font-medium mb-2" data-i18n="coupon_code">Code promo</label><div class="flex gap-2"><input type="text" id="couponInput" placeholder="GLOW10" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><button id="applyCoupon" class="btn-accent text-white px-4 py-2 rounded-lg font-semibold" data-i18n="apply">Appliquer</button></div><p id="couponMsg" class="text-sm mt-1"></p></div>
-      <div class="space-y-2 text-sm"><div class="flex justify-between"><span data-i18n="subtotal">Sous-total</span><span id="cartSubtotal">0 DA</span></div><div class="flex justify-between text-green-600 hidden" id="discountRow"><span data-i18n="discount">Remise</span><span id="cartDiscount">-0 DA</span></div><div class="flex justify-between font-bold text-lg pt-2 border-t"><span data-i18n="total">Total</span><span id="cartTotal">0 DA</span></div></div>
+      <!-- Order summary first -->
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between"><span data-i18n="subtotal">Sous-total</span><span id="cartSubtotal">0 DA</span></div>
+        <div class="flex justify-between text-green-600 hidden" id="discountRow"><span data-i18n="discount">Remise</span><span id="cartDiscount">-0 DA</span></div>
+        <div class="flex justify-between font-bold text-lg pt-2 border-t"><span data-i18n="total">Total</span><span id="cartTotal">0 DA</span></div>
+      </div>
+      <!-- Coupon section now placed after total (last before checkout) -->
+      <div>
+        <label class="block text-sm font-medium mb-2" data-i18n="coupon_code">Code promo</label>
+        <div class="flex gap-2">
+          <input type="text" id="couponInput" placeholder="GLOW10" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none">
+          <button id="applyCoupon" class="btn-accent text-white px-4 py-2 rounded-lg font-semibold" data-i18n="apply">Appliquer</button>
+        </div>
+        <p id="couponMsg" class="text-sm mt-1"></p>
+      </div>
       <button id="checkoutBtn" class="btn-primary w-full text-white py-3 rounded-lg font-semibold text-lg"><i class="fa-brands fa-whatsapp mr-2"></i><span data-i18n="order_whatsapp">Commander via WhatsApp</span></button>
     </div>
   </div>
