@@ -1,694 +1,282 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Glow & Care – Parapharmacie, Beauté & Cosmétiques</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    :root {
-      --accent: #2563eb;
-      --accent-light: #eff6ff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --glass: rgba(255, 255, 255, 0.75);
-      --border: rgba(255, 255, 255, 0.5);
-      --shadow: 0 8px 32px rgba(37, 99, 235, 0.08);
-    }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 40%, #ffffff 100%);
-      color: var(--text);
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    html[lang="ar"] body {
-      font-family: 'Cairo', sans-serif;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    button {
-      font-family: inherit;
-      cursor: pointer;
-      background: none;
-      border: none;
-    }
-
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* ORBS */
-    .orbs {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.5;
-    }
-
-    .orb1 {
-      width: 520px;
-      height: 520px;
-      top: -12%;
-      left: -8%;
-      background: radial-gradient(circle, #60a5fa, transparent 70%);
-      animation: float1 22s ease-in-out infinite;
-    }
-
-    .orb2 {
-      width: 460px;
-      height: 460px;
-      top: 28%;
-      right: -10%;
-      background: radial-gradient(circle, #93c5fd, transparent 70%);
-      animation: float2 26s ease-in-out infinite;
-    }
-
-    .orb3 {
-      width: 420px;
-      height: 420px;
-      bottom: -15%;
-      left: 30%;
-      background: radial-gradient(circle, #60a5fa, transparent 70%);
-      animation: float3 24s ease-in-out infinite;
-    }
-
-    @keyframes float1 { 0%,100% { transform: translate(0, 0); } 50% { transform: translate(50px, 60px); } }
-    @keyframes float2 { 0%,100% { transform: translate(0, 0); } 50% { transform: translate(-40px, 50px); } }
-    @keyframes float3 { 0%,100% { transform: translate(0, 0); } 50% { transform: translate(30px, -50px); } }
-
-    /* Glass effect */
-    .glass {
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-    }
-
-    /* HEADER */
-    .header {
-      position: sticky;
-      top: 12px;
-      z-index: 100;
-      margin: 12px 16px 0;
-    }
-
-    .header-top {
-      padding: 8px 12px;
-    }
-
-    .header-top .container {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 20px;
-      color: var(--accent);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .logo img {
-      height: 36px;
-      width: auto;
-      border-radius: 10px;
-    }
-
-    .menu-toggle {
-      display: none;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 40px;
-      padding: 8px;
-    }
-
-    .search-wrap {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 16px;
-      border-radius: 60px;
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-    }
-
-    .search-wrap input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      outline: none;
-      font-size: 15px;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .icon-btn {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 40px;
-      transition: 0.2s;
-      color: #1e293b;
-      position: relative;
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: var(--accent);
-      color: white;
-      font-size: 11px;
-      min-width: 18px;
-      height: 18px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      font-weight: 600;
-      padding: 0 4px;
-    }
-
-    .lang-switcher {
-      position: relative;
-    }
-
-    #langBtn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0 12px;
-      height: 42px;
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 40px;
-      font-weight: 500;
-    }
-
-    .lang-dropdown {
-      position: absolute;
-      top: 50px;
-      inset-inline-end: 0;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 8px;
-      display: none;
-      z-index: 30;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
-    }
-
-    .lang-dropdown.show {
-      display: block;
-    }
-
-    .lang-dropdown button {
-      width: 100%;
-      text-align: start;
-      padding: 8px 20px;
-      border-radius: 14px;
-      font-size: 14px;
-    }
-
-    /* NAV CATEGORIES */
-    .nav-categories {
-      margin-top: 12px;
-      padding: 6px 12px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .nav-categories .container {
-      display: flex;
-      gap: 28px;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-    }
-    .nav-categories a {
-      white-space: nowrap;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 14px;
-      padding: 8px 0;
-      color: #1e293b;
-      transition: 0.2s;
-    }
-    .nav-categories a:hover { color: var(--accent); }
-
-    /* HERO */
-    .hero {
-      position: relative;
-      height: 58vh;
-      min-height: 420px;
-      margin: 20px 16px 0;
-      border-radius: 36px;
-      overflow: hidden;
-    }
-    .hero-slider { position: relative; width: 100%; height: 100%; }
-    .hero-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.4, 1);
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-    }
-    .hero-slide.active { opacity: 1; z-index: 2; }
-    .hero-slide::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.25) 50%, transparent 80%);
-    }
-    html[dir="rtl"] .hero-slide::before {
-      background: linear-gradient(270deg, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.25) 50%, transparent 80%);
-    }
-    .hero-content {
-      position: relative;
-      margin-inline-start: 5%;
-      max-width: 520px;
-      padding: 32px;
-      background: rgba(15, 23, 42, 0.2);
-      backdrop-filter: blur(8px);
-      border-radius: 32px;
-      color: white;
-    }
-    .hero-content h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 700; margin-bottom: 12px; }
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      padding: 12px 28px;
-      border-radius: 999px;
-      font-weight: 600;
-      transition: 0.2s;
-      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
-    }
-    .hero-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(6px);
-      border-radius: 60px;
-      display: grid;
-      place-items: center;
-      z-index: 5;
-      cursor: pointer;
-    }
-    .hero-arrow.prev { left: 18px; }
-    .hero-arrow.next { right: 18px; }
-    .hero-dots {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 5;
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.6);
-      transition: 0.2s;
-    }
-    .dot.active { width: 28px; background: white; }
-
-    /* TRUST BAR */
-    .trust-bar {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin: 28px auto;
-      padding: 18px 24px;
-    }
-    .trust-item { display: flex; align-items: center; gap: 12px; font-weight: 500; }
-
-    /* CATEGORIES GRID */
-    .cat-grid {
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      padding: 8px 4px;
-      scrollbar-width: thin;
-    }
-    .cat-item {
-      flex: 0 0 auto;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .cat-icon {
-      width: 84px;
-      height: 84px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 60px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    .cat-icon img { width: 48px; height: 48px; object-fit: contain; }
-
-    /* PRODUCTS */
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 24px;
-    }
-    .product-card {
-      padding: 16px;
-      transition: 0.25s;
-      border-radius: 28px;
-    }
-    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px rgba(37, 99, 235, 0.12); }
-    .product-img {
-      position: relative;
-      aspect-ratio: 1;
-      background: #f8fafc;
-      border-radius: 24px;
-      overflow: hidden;
-      margin-bottom: 14px;
-    }
-    .product-img img { width: 100%; height: 100%; object-fit: contain; transition: 0.4s; }
-    .wish-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: white;
-      width: 34px;
-      height: 34px;
-      border-radius: 40px;
-      display: grid;
-      place-items: center;
-      opacity: 0;
-      transition: 0.2s;
-    }
-    .product-card:hover .wish-btn { opacity: 1; }
-    .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
-    .price { font-weight: 700; font-size: 18px; color: var(--accent); }
-    .add-btn {
-      background: var(--accent-light);
-      color: var(--accent);
-      padding: 8px 14px;
-      border-radius: 40px;
-      font-weight: 600;
-    }
-
-    /* FOOTER */
-    .footer {
-      margin: 48px 16px 20px;
-      padding: 40px 0 24px;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1.6fr;
-      gap: 32px;
-    }
-    @media (max-width: 960px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; } }
-    @media (max-width: 680px) {
-      .trust-bar { grid-template-columns: 1fr 1fr; }
-      .products-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
-      .hero { height: 48vh; min-height: 360px; }
-      .hero-content { padding: 20px; }
-    }
-    @media (max-width: 560px) {
-      .header .container { flex-wrap: wrap; }
-      .menu-toggle { display: block; }
-      .nav-categories { max-height: 0; overflow: hidden; transition: 0.3s; }
-      .nav-categories.open { max-height: 280px; overflow-y: auto; }
-      .search-wrap { order: 3; width: 100%; flex-basis: 100%; }
-      .hero-arrow { display: none; }
-    }
-
-    /* STICKY CART BUTTON - visible on scroll */
-    .floating-cart {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 56px;
-      height: 56px;
-      background: var(--accent);
-      border-radius: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-      z-index: 150;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .floating-cart:hover { transform: scale(1.05); }
-    .floating-cart .cart-count {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: #ef4444;
-    }
-    @media (min-width: 768px) { .floating-cart { display: none; } }
-
-    /* CART DRAWER */
-    #cartDrawer {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 90%;
-      max-width: 420px;
-      height: 100%;
-      background: white;
-      box-shadow: -6px 0 28px rgba(0, 0, 0, 0.12);
-      z-index: 300;
-      padding: 24px;
-      transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      overflow-y: auto;
-      border-radius: 32px 0 0 32px;
-    }
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: #1e293b;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 60px;
-      z-index: 400;
-      transition: 0.3s;
-      opacity: 0;
-    }
-    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-    .remove-item { background: #fee2e2; color: #dc2626; border: none; border-radius: 20px; padding: 4px 10px; cursor: pointer; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Glow and Care - Cosmétiques</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<style>
+:root {
+  --primary: #ec4899;
+  --accent: #8b5cf6;
+  --background: #fff1f2;
+}
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--background);
+  transition: background-color 0.2s;
+}
+.btn-primary { background-color: var(--primary); transition: all 0.3s ease; }
+.btn-primary:hover { filter: brightness(0.9); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.btn-accent { background-color: var(--accent); }
+.text-primary { color: var(--primary); }
+.bg-primary { background-color: var(--primary); }
+.border-primary { border-color: var(--primary); }
+.text-accent { color: var(--accent); }
+.bg-accent { background-color: var(--accent); }
+.hero-slide { transition: opacity 0.8s ease-in-out; }
+.toast { animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s; }
+@keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
+.modal { backdrop-filter: blur(8px); }
+.rtl { direction: rtl; }
+.drag-handle { cursor: grab; }
+.drag-handle:active { cursor: grabbing; }
+.sortable-ghost { opacity: 0.4; }
+</style>
 </head>
-<body>
-<div class="orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+<body class="text-gray-800">
 
-<header class="header">
-  <div class="header-top glass">
-    <div class="container">
-      <button class="menu-toggle" id="menuToggleBtn">☰</button>
-      <a href="#" class="logo">
-        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAJQAyADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACCiiigAooooAKKKKACiiigAooooAKKKKACCiikzQBBcXNvaxF7iaK2T/npM+yP8zXJeI/iPp2nRvaabt1K+6Kkf+qRv+ujVwHxN8cSeJNZe1gmUaNajbFHj/Xt/z0euL+1/wB2vHr1+a0Oh9tleTp2q4hX7L9TV17TtY1C6/tLxHqKz3L81+0wQwRw/3IYz3rcttSsfBOnWjWLtci/wDiImnRXP8AwFq881TUrnWtVstNsd19ezN5UFsP/an915v+EVY+JnhSbwXo/hfRdUJuPEVtI9xcP/FBHK+5UnH/AD1be/59K54xXKpbHrVHJVZUfhTuvOyXY3tW8VXviPXbLT49QSI68wjuFgGVmi3bXtx/d+Y8V9V/BT4b6d8K9Y1W3W+uJdK1KEf2XA8jERSp9/aT97c36V8feA9EeXx5p3iHUZPsej+H7htQvYmb51ki+8kP/TTzG219h/Cfx2fH3hG217bJHIzSJKsrbjuR9u7d/db/CipUnUl7OmrK4sLh6MIVK9d3VnZWstN/0PVd0s7sf9S/+tH9aOvaW6aP6sf601Dmj+dcrPpzgfEOq+K/DaG+uLvTNQ0/f81sIbiG4T6rmRVpPD/xg8I6zMILi9m0u5b/lnfQ+X/wCPcrius8mG5XY6K6n+GhfD2l7sbof++P8AGqM+UzYtQheITW11FcL/AH4JVlX/AL6TdVfUdZsdIt/tN9eRWluP+Wk77Vq/N4Z0iGdrj7Nb+a3WVYV3Uy3trS0ufNScTzJ91Z+XUf7NAcpD/wALI8G/9B6y/I//ABNSL8SPBbfd8Raf+crL/wCy1ma1Y+H9Mj+06gdPsvL/AOWl+scP/kTArlbvxx4Asl/0jxJ4egH/AE8QR/0oHynoP/Cx/B3/AEG9P/7+Cj/hY/g6T7uvaen+82P615h/wtT4bf8AQ0+H/wDv8P8AGj/hanw3/wCho0D/AMCFoDlZ6b/wsew/6Dmk/wDgav8AjSf8LG0n/oM6T/4FL/jXnI+K3w2H/M1aB/4EpTv+FrfDP/oZdA/8CU/wplezkejf8LAsP+g1pH/AIFL/jSHx/pi/c1fSP8AwKWvPv8Ahbfwx/6GLQv/AAG/+tSf8Ld+GP8A0MWhf+A3/wBajlYezkeijx9paf8AMW0r/wACl/xpR8QNK/6Cumf+BS/415x/wt34Y/8AQx6F/wCA3/1qP+FufDH/AKGPQf8AwG/+tTsw9mej/wDCf6T/ANBfTP8AwKX/ABpP+Fh6N/0GdM/8Cl/xrzj/AIW58Mf+hj0H/wABv/rUf8Lc+GP/AEMehf8AgN/9akP2Z6N/wsPRv+gzpn/gUv8AjSf8LA0f/oMan/4FL/jXnP8Awt34Yf8AQx6H/wCA3/1qT/hb3ww/6GPQf/Ab/wCtQFj0j/hP9H/6DGl/+BS/40f8LB0f/oL6X/4FL/jXm/8Awt/4Y/8AQx6F/wCA3/1qP+FvfDH/AKGPQv8AwG/+tSsNm+PF+jnpq2l/+BUf+NRP4y0xeus2Q+twtcb/AMLc+GP/AEMeg/8AgN/9aj/hbnwxf7viDRG/7cv/AK1OxaPUreeO9gWeCaK6gPSWJwy/lUplVeG+Svn+H4jaLZTv9h1/RvLd7j9zG0sHIuLRPuq2P+WNdxp/wARfDeo7cavYwSf3ZrlVpWHynf+an8TZ+lP/wBI/wCeb1zFr470iY7Bq2nsf+vha27bxDZ3f8AqL60l+kwoCyNphO/8FMs7iS6h/f2s1rP/wA85VqO01iC8X5Jlk+imryv80QG+u2VH/iahC0ilffRIE8zzC8L/cniX/7KqUUiXU7Pbyx/88n/AHq12cxd4RNGn/Ta2l/9Co+3G3Vnk2XH/TORd1HMBm/Yov4FaF/+ecksX+FRvYzL/wAe975/+zNH/rR/adpN/rN/5L/hR9jtn6PJ/wB9CmA2S4urf/j8tNkX/Pxan5f++lqhqnhvR9ft2i1HSrHUoJ+i3Nqki/ka29LSbTZmNnLvjP8AzzmlZl/LdWy86yfLcQh/+nZ3/b+80gPMdQ+AvhGxum1GzhuPD1yOp0q7mth/357flW94dm8Q+FLiCzvtV/4SXS5Pu3VzEIblP+u2z5ZPyruRb28f+rEkP8A05TpuH/fS4oWG98zclxHcf7N4m1v/IlAGh5yT9Gs/wA2pNqf89IP/HhWTJp8E77Z9G02X/adEol8P6M3Ww0mN/8AZt4f8KANsD/nl5Uv+5KG/WjzP+ecw/wC2ibq5h/C2hyD93Z6b/wBc9zL/AOz0w+DdDXpePH/1zkJ/pQB1nmSf3TTPP/56RJ+dcu/hKx/5Z6xqlv8A7rzKf6U0eFpPu/2/rv8A4FUAdeGjbq9P+2z/APgQ1cNJ4Xl/6Dmu/wDgYv8A8TVE+E7pfle88RTfW8j/APiaAPUiyf8APWEf71I0Zf8A5bw/+PCvL18Myr9zUPE3/g4/+Jp3/CNTp3ez/Fzz/wCOmgDur6a3tYx51xbxf9dJkSsz+07G3/1mq6dH/wBfMcv/AKLrhLjwjcx/NJdXEy/9Nb+eT/0KKqf/AALOnL0MaD67NzfnzzQmeof2jZXP/LT/AI8x/wA+9xK3/oTU9pl/5Z3Usn/TK/tEf/x2vMv+EDsZPv2qSfSP/A1Zv/AzSjbNHO2no6fwrJcCVfoQ+aBHpsMkP3mng8v/prbyr/6DmrJltv4JLDP+xPGP51wHhbVxpC/wBjaY8d3H5u77LLM26D/wCxrs47u+tP+Pi0+yQd7l3Wbb/3zRRU2/omttHPkM/++pWdvI/nRUlBk3Dp/wAfdhbXEf8A1y/vU0v4R0+7/eW+ni3k/wCenk7Zf/Hak/wCEc05PmS28t/+nW/yD/3zUka6nY/6iZrj/p1vW3f+P0AYl/4YuLVZIfP1C3g/6eIvPj/76Rqk0/RXsNQt7mL/AIkrp/rfL3R+Z7sF/k9a02ufx3TXFj/07zwh4f8AgX3G/wDQKoX+pTT/ALtdRvk/6d4o/K/8erWmgkzprq4gT/j8k+v2yH5v/Im8Vw/jG302Eed5WmW+7+BWUf8ArtGv5VPpOpWmpSfZb/XJ5/8ApncK/wD7K1Vpvg54H1iJmul0/dJ97yWeP+WatVk9SrHimuaPaeINlvefZJP+edwskZ/MNXL3/wAGNETe0AuLY/3IL1v/AGaveb/9nnw3Mt1bW13qMYjWXy28/wA2Ifx/J/vV4zrXwrvNO0/Xp5dTuI9O0sPcyWscKyzfL9xbdl/1rP8A3qloVzlf9nbwLZ+IdK1HVNQe5nliuFittKJfykX+D/gX56V9WfB+2vPCPg6LRr6+e+gs5mWyuJ/vrCfuL/utXjXwl+CEnhprTW7j7Yl15e/yJZv3Kbvm+6v3jX0D4c0l9Pimd7iW4uLh911cPj95/+quJ/iVrPwv8AEmraroKz3kUcW6+tnRZobfH3XVvusv8Av00YyZ6BN49vY/uskj/X/wCtTT8QNT/55L+tcld+GpF/1c3/AAKs+bQLxP4P/HqkZ6HH8RNQ/wCea0//AIWJqH9xP+/leaNpd2n/ACz/APQqjlt7xD/NfyrQhntB+IF+P+Wcf/jwo/4T+6/uJ/30K8eZ7z1b/vqo/tE//PT/AMeWgD2E+P7r/notH/CfXf8AezXj/wBpn/v/AKmk+1T/AN+nYEe3f8J/cf3f0o/4T+4/u/pXif22f+//ACpPtM/9/wDlT5UAfa9FFFAgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAP3TWJ4r8UaZ4S0l7/U7jYvSKEH97N/srVrXfEen+GrL7VfzbF/giX78r/wCzXjuoQ3nxD8RSarfMY7eP+7/q4V/upXJiKzgvZxe/c9nKsCq9R16m0fuT/wCAYyW2t/FXxLLqGsStY6OP+D9//t2vWNB8K6J4R027tfD9ikM9+zRPIh+aDZ99Y/w9a2bLToNK0+KK2jWCGFfliWsi21E6n4lka3XfbWFrP+9/vySLs/lXiKMY/E7n3U6lTEy/drkjG33vdnJeG/gq/hrxNp+s/bt1hFdG+aBIfM8yRF+UO33f+A/wA69M+JPgWP4geEbnS2bZqB2TWd0B892y/6tsf3WrtaQ/drKpUnKp7SD5WuvU7KOHpQpKjVjzpap21TfofK/gW0utM8Sf8IhqllPYalYzNcX0M/8Ay2ZvvL/wBc6+wPAGiac2kvrWlWj6VYamQy6ft27Ik+X5l/vHrTtf8I6P4mRf7U0+1vyv3JLm3V2T/AHWq9p+mW2j2cVnZwpBbQpsiiX7qrVOk+aWt+5pXrRdO0fdtpbyNI/eqSgfK1JWVmcIKoCqB2p9GBRTsAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUABOBxXkfxa+JC3/APxT+gXH+nP+7uLyP/l1/wCmLf3m9q2Pib47t/DOmNpemzK+v3q7Gj/59Iz/ABP/ALDfdWvF/Cfgq/8AEd9anT52Mlywe51SUbpPL/vv/u152JqfDCJ9LleGjFfW6+3TzPRfhN4Y+zu+uXSf6PGAliH/wCW394/pivUhY2/wDCn5UyG1Sygjt4lCQxL5ap/dqxWB6lWtKtUcmB5VV7w/1jEUUUVCVjogqKDhfN/FRS1J0zq6+teQP8OoP+E8fVmuf+JZav/aMe2H/AI+bj7yo2f7tfQFce3hS+8Tfs4vptuF/tR9PcwM/3VmWTcuf+BCpjGU7qLsaTqQp8vP1Z1B+8PwpzfdoCjH0pD0rYyG0UtFAgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDyjxTol3rmux32iwn+0H/0O4S4g3R+R/HG/+7n5a3dG8PweCrGS7uXbUbxYRDcXkq8yD+7H/cWuniRbdURF6VHdz4/dt+tcU6KnNTex79HFzp0fYQV09/Tp/mWLbUIbuFZI3/LrU+/wBhWG9nbL/pESeVc/3/AP69WrO++1W+5vlnT/WJWTLoWk3ydU8+b9+X/wAerv5TyLiQ+LImk8t1ezk/6bR7f1o/4SK3/wCfhPyrE1bQLdbVont1uY/7j1062qeGtX0yD7doFwtw/wAtxYvWUjNqzRq2uvWd1L5W+oJ/EOm2s/jPw/K3/H9ZKLN/9tY/K/8AQokrt7TRrjWkha6h8pP+WZkX94v+8tYfjrwbBp8Hh6/jt4nnt9WtfMm/iaJpFjZfwpGZ1B6Clf7w+lGerUj0pLiwUUUUCCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z" alt="Glow &amp; Care">
-        <span>Glow &amp; Care</span>
-      </a>
-      <div class="search-wrap">
-        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="search" id="searchInput" placeholder="Rechercher...">
-      </div>
-      <div class="header-actions">
-        <div class="lang-switcher"><button id="langBtn">🇫🇷 FR ▼</button><div class="lang-dropdown" id="langDropdown"><button data-lang="fr">Français</button><button data-lang="en">English</button><button data-lang="ar">العربية</button></div></div>
-        <button class="icon-btn cart-btn" id="openCartBtn">🛒<span class="cart-count" id="cartCount">0</span></button>
-      </div>
+<!-- Toast Container -->
+<div id="toastContainer" class="fixed top-4 right-4 z-[100] space-y-2"></div>
+
+<!-- Admin Login Modal -->
+<div id="loginModal" class="modal fixed inset-0 bg-black/50 z-[90] hidden items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+    <div class="text-center mb-6">
+      <i class="fa-solid fa-lock text-4xl text-primary mb-3"></i>
+      <h2 class="text-2xl font-bold" data-i18n="admin_login">Connexion Admin</h2>
     </div>
+    <form id="loginForm" class="space-y-4">
+      <div><label class="block text-sm font-medium mb-1" data-i18n="username">Identifiant</label><input type="text" id="adminId" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none" required></div>
+      <div><label class="block text-sm font-medium mb-1" data-i18n="password">Mot de passe</label><input type="password" id="adminPass" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none" required></div>
+      <button type="submit" class="btn-primary w-full text-white font-semibold py-3 rounded-lg" data-i18n="login">Se connecter</button>
+      <button type="button" id="closeLogin" class="w-full text-gray-600 py-2" data-i18n="cancel">Annuler</button>
+    </form>
   </div>
-  <nav class="nav-categories glass" id="navMenu"><div class="container" id="navCategoriesList"></div></nav>
-</header>
-
-<!-- Floating Cart Button (visible on mobile) -->
-<div class="floating-cart" id="floatingCartBtn">
-  🛒<span class="cart-count" id="floatingCartCount">0</span>
 </div>
 
-<section class="hero" id="heroSection"><div class="hero-slider" id="heroSlider"></div><button class="hero-arrow prev" id="heroPrev">❮</button><button class="hero-arrow next" id="heroNext">❯</button><div class="hero-dots" id="heroDots"></div></section>
+<!-- Main App -->
+<div id="app">
+  <!-- Header -->
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3"><i class="fa-solid fa-spa text-2xl text-primary"></i><h1 id="storeName" class="text-xl sm:text-2xl font-bold tracking-tight">Glow and Care</h1></div>
+        <nav class="hidden md:flex items-center gap-6"><a href="#storefront" class="nav-link font-medium hover:text-primary transition" data-view="storefront" data-i18n="shop">Boutique</a><button id="adminLink" class="font-medium hover:text-primary transition"><i class="fa-solid fa-user-shield mr-1"></i><span data-i18n="admin">Admin</span></button></nav>
+        <div class="flex items-center gap-3">
+          <select id="langSwitcher" class="text-sm border border-gray-300 rounded-lg px-2 py-1.5 focus:ring-2 focus:ring-pink-300 outline-none"><option value="fr">FR</option><option value="ar">AR</option><option value="en">EN</option></select>
+          <button id="cartBtn" class="relative"><i class="fa-solid fa-bag-shopping text-2xl hover:text-primary transition"></i><span id="cartCount" class="absolute -top-2 -right-2 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span></button>
+          <button id="mobileMenuBtn" class="md:hidden"><i class="fa-solid fa-bars text-2xl"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t bg-white"><div class="px-4 py-3 space-y-2"><a href="#storefront" class="nav-link block py-2" data-view="storefront" data-i18n="shop">Boutique</a><button id="adminLinkMobile" class="block py-2 w-full text-left"><i class="fa-solid fa-user-shield mr-1"></i><span data-i18n="admin">Admin</span></button></div></div>
+  </header>
 
-<section class="trust-bar container glass">
-  <div class="trust-item">🚚 Livraison 48h Algérie</div><div class="trust-item">💰 Paiement à la livraison</div><div class="trust-item">✅ 100% Authentiques</div><div class="trust-item">💊 Conseil pharmacien</div>
-</section>
+  <!-- Storefront View -->
+  <main id="storefrontView">
+    <section class="relative h-[60vh] md:h-[70vh] overflow-hidden">
+      <div id="heroCarousel" class="relative h-full"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+      <div class="absolute inset-0 flex items-center justify-center text-center text-white px-4"><div><h2 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg" data-i18n="hero_title">Révélez votre éclat naturel</h2><p class="text-lg md:text-xl mb-6 drop-shadow" data-i18n="hero_subtitle">Cosmétiques premium pour une peau radieuse</p><button id="shopNowBtn" class="btn-primary px-8 py-3 rounded-full text-white font-semibold text-lg shadow-xl" data-i18n="shop_now">Acheter maintenant</button></div></div>
+      <div id="heroDots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2"></div>
+    </section>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><div class="flex flex-wrap gap-2 justify-center" id="categoryFilters"></div></section>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16"><h3 class="text-3xl font-bold mb-8 text-center" data-i18n="our_products">Nos Produits</h3><div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div><div id="noProducts" class="text-center py-16 text-gray-500 hidden"><i class="fa-solid fa-box-open text-5xl mb-4"></i><p data-i18n="no_products">Aucun produit disponible</p></div></section>
+  </main>
 
-<div class="container" style="margin: 24px auto;"><div class="cat-grid" id="categoryGrid"></div></div>
+  <!-- Admin View -->
+  <main id="adminView" class="hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex justify-between items-center mb-8"><h2 class="text-3xl font-bold" data-i18n="admin_panel">Panneau d'administration</h2><button id="logoutBtn" class="text-red-600 hover:text-red-700 font-medium"><i class="fa-solid fa-right-from-bracket mr-1"></i><span data-i18n="logout">Déconnexion</span></button></div>
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="border-b overflow-x-auto"><div class="flex"><button class="admin-tab px-4 sm:px-6 py-4 font-semibold border-b-2 border-primary text-primary whitespace-nowrap" data-tab="config"><i class="fa-solid fa-sliders mr-2"></i><span data-i18n="configuration">Configuration</span></button><button class="admin-tab px-4 sm:px-6 py-4 font-semibold text-gray-600 hover:text-primary whitespace-nowrap" data-tab="products"><i class="fa-solid fa-box mr-2"></i><span data-i18n="products">Produits</span></button><button class="admin-tab px-4 sm:px-6 py-4 font-semibold text-gray-600 hover:text-primary whitespace-nowrap" data-tab="categories"><i class="fa-solid fa-tags mr-2"></i><span data-i18n="categories">Catégories</span></button></div></div>
 
-<section class="products container"><h2 class="section-title" id="productsTitle">Nos best-sellers</h2><div class="products-grid" id="productsGrid"></div></section>
+        <!-- Configuration Tab -->
+        <div id="tab-config" class="admin-tab-content p-6 sm:p-8 space-y-8">
+          <div class="space-y-4"><h3 class="text-xl font-bold" data-i18n="general_settings">Paramètres généraux</h3><div class="grid md:grid-cols-2 gap-4"><div><label class="block text-sm font-medium mb-1" data-i18n="store_name">Nom de la boutique</label><input type="text" id="configStoreName" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div><div><label class="block text-sm font-medium mb-1" data-i18n="whatsapp_number">Numéro WhatsApp</label><input type="tel" id="configWhatsapp" placeholder="+213776380744" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div><div><label class="block text-sm font-medium mb-1" data-i18n="default_language">Langue par défaut</label><select id="configDefaultLang" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"><option value="fr">Français</option><option value="ar">العربية</option><option value="en">English</option></select></div></div><button id="saveGeneral" class="btn-primary text-white px-6 py-2.5 rounded-lg font-semibold"><i class="fa-solid fa-save mr-2"></i><span data-i18n="save">Enregistrer</span></button></div>
+          <div class="space-y-4 pt-8 border-t"><h3 class="text-xl font-bold" data-i18n="theme">Thème</h3><div class="grid md:grid-cols-3 gap-4"><div><label class="block text-sm font-medium mb-1" data-i18n="primary_color">Couleur primaire</label><div class="flex gap-2"><input type="color" id="configPrimaryColor" class="h-10 w-16 rounded border border-gray-300 cursor-pointer"><input type="text" id="configPrimaryColorText" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"></div></div><div><label class="block text-sm font-medium mb-1" data-i18n="accent_color">Couleur accent</label><div class="flex gap-2"><input type="color" id="configAccentColor" class="h-10 w-16 rounded border border-gray-300 cursor-pointer"><input type="text" id="configAccentColorText" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"></div></div><div><label class="block text-sm font-medium mb-1" data-i18n="background_color">Couleur de fond</label><div class="flex gap-2"><input type="color" id="configBgColor" class="h-10 w-16 rounded border border-gray-300 cursor-pointer"><input type="text" id="configBgColorText" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"></div></div></div><button id="saveTheme" class="btn-primary text-white px-6 py-2.5 rounded-lg font-semibold"><i class="fa-solid fa-palette mr-2"></i><span data-i18n="save_theme">Enregistrer le thème</span></button></div>
+          <div class="space-y-4 pt-8 border-t"><h3 class="text-xl font-bold" data-i18n="hero_banner">Bannière Hero</h3><div class="space-y-3" id="heroImagesList"></div><div class="flex flex-col sm:flex-row gap-2"><input type="url" id="newHeroImageUrl" placeholder="https://exemple.com/image.jpg" class="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"><button id="addHeroImage" class="btn-accent text-white px-6 py-2.5 rounded-lg font-semibold whitespace-nowrap"><i class="fa-solid fa-plus mr-2"></i><span data-i18n="add_image">Ajouter</span></button></div><p class="text-sm text-gray-500" data-i18n="hero_hint">Glissez pour réorganiser. Minimum 1 image, 5+ recommandées.</p></div>
+          <div class="space-y-4 pt-8 border-t"><h3 class="text-xl font-bold" data-i18n="footer_info">Informations pied de page</h3><div class="grid md:grid-cols-2 gap-4"><div><label class="block text-sm font-medium mb-1" data-i18n="company_name">Nom de l'entreprise</label><input type="text" id="configCompanyName" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div><div><label class="block text-sm font-medium mb-1" data-i18n="phone">Téléphone</label><input type="tel" id="configPhone" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div><div><label class="block text-sm font-medium mb-1" data-i18n="email">Email</label><input type="email" id="configEmail" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div><div><label class="block text-sm font-medium mb-1" data-i18n="address">Adresse</label><input type="text" id="configAddress" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div><div><label class="block text-sm font-medium mb-1">Facebook URL</label><input type="url" id="configFacebook" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div><div><label class="block text-sm font-medium mb-1">Instagram URL</label><input type="url" id="configInstagram" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div></div><div><label class="block text-sm font-medium mb-1" data-i18n="about_text">Texte à propos</label><textarea id="configAbout" rows="3" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></textarea></div><button id="saveFooter" class="btn-primary text-white px-6 py-2.5 rounded-lg font-semibold"><i class="fa-solid fa-save mr-2"></i><span data-i18n="save">Enregistrer</span></button></div>
+        </div>
 
-<footer class="footer glass">
-  <div class="container footer-grid">
-    <div><h4>À propos</h4><p id="footerAboutText">Glow & Care, votre parapharmacie en ligne algérienne. Produits authentiques, livraison rapide.</p></div>
-    <div><h4>Aide</h4><ul><li>📖 FAQ</li><li>📦 Suivi commande</li><li>📞 Nous contacter</li></ul></div>
-    <div><h4>Contact</h4><p id="footerContactText">🇩🇿 Algérie<br>contact@glowandcare.dz<br>📞 +213 556 123456</p></div>
-    <div><h4>Newsletter</h4><form id="newsletterForm"><input type="email" placeholder="Votre email" required><button type="submit">S'abonner</button></form></div>
+        <!-- Products Tab -->
+        <div id="tab-products" class="admin-tab-content hidden p-6 sm:p-8"><div class="flex justify-between items-center mb-6"><h3 class="text-xl font-bold" data-i18n="manage_products">Gérer les produits</h3><button id="addProductBtn" class="btn-primary text-white px-5 py-2.5 rounded-lg font-semibold"><i class="fa-solid fa-plus mr-2"></i><span data-i18n="add_product">Ajouter</span></button></div><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-50 border-b"><tr><th class="text-left px-4 py-3" data-i18n="image">Image</th><th class="text-left px-4 py-3" data-i18n="name">Nom</th><th class="text-left px-4 py-3" data-i18n="price">Prix</th><th class="text-left px-4 py-3" data-i18n="stock">Stock</th><th class="text-left px-4 py-3" data-i18n="actions">Actions</th></tr></thead><tbody id="productsTable"></tbody></table></div></div>
+
+        <!-- Categories Tab -->
+        <div id="tab-categories" class="admin-tab-content hidden p-6 sm:p-8"><div class="flex justify-between items-center mb-6"><h3 class="text-xl font-bold" data-i18n="manage_categories">Gérer les catégories</h3><button id="addCategoryBtn" class="btn-primary text-white px-5 py-2.5 rounded-lg font-semibold"><i class="fa-solid fa-plus mr-2"></i><span data-i18n="add_category">Ajouter</span></button></div><div id="categoriesList" class="space-y-3"></div></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Cart Sidebar -->
+  <div id="cartSidebar" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-[80] flex flex-col">
+    <div class="p-6 border-b flex justify-between items-center"><h3 class="text-2xl font-bold" data-i18n="cart">Panier</h3><button id="closeCart"><i class="fa-solid fa-xmark text-2xl"></i></button></div>
+    <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+    <div class="border-t p-6 space-y-4">
+      <div><label class="block text-sm font-medium mb-2" data-i18n="coupon_code">Code promo</label><div class="flex gap-2"><input type="text" id="couponInput" placeholder="GLOW10" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 outline-none"><button id="applyCoupon" class="btn-accent text-white px-4 py-2 rounded-lg font-semibold" data-i18n="apply">Appliquer</button></div><p id="couponMsg" class="text-sm mt-1"></p></div>
+      <div class="space-y-2 text-sm"><div class="flex justify-between"><span data-i18n="subtotal">Sous-total</span><span id="cartSubtotal">0 DA</span></div><div class="flex justify-between text-green-600 hidden" id="discountRow"><span data-i18n="discount">Remise</span><span id="cartDiscount">-0 DA</span></div><div class="flex justify-between font-bold text-lg pt-2 border-t"><span data-i18n="total">Total</span><span id="cartTotal">0 DA</span></div></div>
+      <button id="checkoutBtn" class="btn-primary w-full text-white py-3 rounded-lg font-semibold text-lg"><i class="fa-brands fa-whatsapp mr-2"></i><span data-i18n="order_whatsapp">Commander via WhatsApp</span></button>
+    </div>
   </div>
-</footer>
+  <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-[79] hidden"></div>
 
-<div id="cartDrawer"><h3>🛍️ Mon panier</h3><ul id="cartItemsList"></ul><div><strong>Total: <span id="cartTotal">0</span> DA</strong></div><button id="checkoutBtn">📞 Commander via WhatsApp</button><button id="closeCartBtn">Fermer</button></div>
-<div id="toastMsg" class="toast"></div>
+  <!-- Product Modal -->
+  <div id="productModal" class="modal fixed inset-0 bg-black/50 z-[85] hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl my-8"><div class="p-6 sm:p-8"><div class="flex justify-between items-start mb-6"><h3 id="productModalTitle" class="text-2xl font-bold" data-i18n="add_product">Ajouter un produit</h3><button id="closeProductModal"><i class="fa-solid fa-xmark text-2xl"></i></button></div>
+      <form id="productForm" class="space-y-4"><input type="hidden" id="productId"><div><label class="block text-sm font-medium mb-1" data-i18n="image_url">URL de l'image</label><input type="url" id="productImage" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none" placeholder="https://placehold.co/400x400"></div>
+      <div><label class="block text-sm font-medium mb-1" data-i18n="name">Nom</label><input type="text" id="productName" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div>
+      <div class="grid grid-cols-2 gap-4"><div><label class="block text-sm font-medium mb-1" data-i18n="price">Prix (DA)</label><input type="number" id="productPrice" required min="0" step="0.01" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div><div><label class="block text-sm font-medium mb-1" data-i18n="stock">Stock</label><input type="number" id="productStock" required min="0" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div></div>
+      <div><label class="block text-sm font-medium mb-1" data-i18n="category">Catégorie</label><select id="productCategory" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></select></div>
+      <div><label class="block text-sm font-medium mb-1" data-i18n="description">Description</label><textarea id="productDescription" rows="3" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></textarea></div>
+      <div class="flex gap-3 pt-4"><button type="submit" class="btn-primary flex-1 text-white py-3 rounded-lg font-semibold" data-i18n="save">Enregistrer</button><button type="button" id="cancelProduct" class="px-6 py-3 rounded-lg border border-gray-300 font-semibold" data-i18n="cancel">Annuler</button></div></form>
+    </div></div>
+  </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getDatabase, ref, onValue, child, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  <!-- Category Modal -->
+  <div id="categoryModal" class="modal fixed inset-0 bg-black/50 z-[85] hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8"><div class="flex justify-between items-start mb-6"><h3 id="categoryModalTitle" class="text-2xl font-bold" data-i18n="add_category">Ajouter une catégorie</h3><button id="closeCategoryModal"><i class="fa-solid fa-xmark text-2xl"></i></button></div>
+      <form id="categoryForm" class="space-y-4"><input type="hidden" id="categoryId"><div><label class="block text-sm font-medium mb-1">Nom (Français)</label><input type="text" id="categoryNameFR" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div>
+      <div><label class="block text-sm font-medium mb-1">الاسم (العربية)</label><input type="text" id="categoryNameAR" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div>
+      <div><label class="block text-sm font-medium mb-1">Name (English)</label><input type="text" id="categoryNameEN" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-300 focus:border-primary outline-none"></div>
+      <div class="flex gap-3 pt-4"><button type="submit" class="btn-primary flex-1 text-white py-3 rounded-lg font-semibold" data-i18n="save">Enregistrer</button><button type="button" id="cancelCategory" class="px-6 py-3 rounded-lg border border-gray-300 font-semibold" data-i18n="cancel">Annuler</button></div></form>
+    </div>
+  </div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCH_nbV04_IPVFnF55J8SEQQBMI-_KW2l4",
-    authDomain: "glow-andcare13.firebaseapp.com",
-    databaseURL: "https://glow-andcare13-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "glow-andcare13",
-    storageBucket: "glow-andcare13.firebasestorage.app",
-    messagingSenderId: "500803457091",
-    appId: "1:500803457091:web:f631cf018ca5d114cd84f6"
-  };
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div><h4 id="footerCompanyName" class="text-white text-xl font-bold mb-4">Glow and Care</h4><p id="footerAbout" class="text-sm mb-4">Votre destination beauté pour des soins premium et naturels.</p><div class="flex gap-4"><a id="footerFacebook" href="#" class="hover:text-primary transition"><i class="fa-brands fa-facebook text-2xl"></i></a><a id="footerInstagram" href="#" class="hover:text-primary transition"><i class="fa-brands fa-instagram text-2xl"></i></a></div></div>
+        <div><h4 class="text-white font-semibold mb-4" data-i18n="contact">Contact</h4><div class="space-y-2 text-sm"><p><i class="fa-solid fa-phone mr-2 text-primary"></i><span id="footerPhone">+213 776 380 744</span></p><p><i class="fa-solid fa-envelope mr-2 text-primary"></i><span id="footerEmail">contact@glowcare.dz</span></p><p><i class="fa-solid fa-location-dot mr-2 text-primary"></i><span id="footerAddress">Alger, Algérie</span></p></div></div>
+        <div><h4 class="text-white font-semibold mb-4" data-i18n="links">Liens</h4><div class="space-y-2 text-sm"><a href="#storefront" class="block hover:text-primary transition" data-i18n="shop">Boutique</a><button id="footerAdminLink" class="block hover:text-primary transition text-left" data-i18n="admin">Admin</button></div></div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm"><p>&copy; 2026 <span id="footerCopyName">Glow and Care</span>. <span data-i18n="rights">Tous droits réservés.</span></p></div>
+    </div>
+  </footer>
+</div>
 
-  let products = [], categories = [], heroSlides = [], siteConfig = { whatsapp: "+213 776 38 07 44", email: "contact@glowandcare.dz", contactText: "Algérie\ncontact@glowandcare.dz\n+213 776 38 07 44" };
-  let cart = [], currentLang = "fr", activeFilter = null, currentSlide = 0, slideInterval;
+<script>
+// I18N Translations
+const I18N = {
+  fr: { shop: "Boutique", admin: "Admin", cart: "Panier", login: "Se connecter", cancel: "Annuler", logout: "Déconnexion", admin_login: "Connexion Admin", username: "Identifiant", password: "Mot de passe", admin_panel: "Panneau d'administration", configuration: "Configuration", products: "Produits", categories: "Catégories", general_settings: "Paramètres généraux", store_name: "Nom de la boutique", whatsapp_number: "Numéro WhatsApp", default_language: "Langue par défaut", save: "Enregistrer", theme: "Thème", primary_color: "Couleur primaire", accent_color: "Couleur accent", background_color: "Couleur de fond", save_theme: "Enregistrer le thème", hero_banner: "Bannière Hero", add_image: "Ajouter", hero_hint: "Glissez pour réorganiser. Minimum 1 image, 5+ recommandées.", footer_info: "Informations pied de page", company_name: "Nom de l'entreprise", phone: "Téléphone", email: "Email", address: "Adresse", about_text: "Texte à propos", manage_products: "Gérer les produits", add_product: "Ajouter", image: "Image", name: "Nom", price: "Prix", stock: "Stock", actions: "Actions", image_url: "URL de l'image", category: "Catégorie", description: "Description", manage_categories: "Gérer les catégories", add_category: "Ajouter une catégorie", hero_title: "Révélez votre éclat naturel", hero_subtitle: "Cosmétiques premium pour une peau radieuse", shop_now: "Acheter maintenant", our_products: "Nos Produits", no_products: "Aucun produit disponible", coupon_code: "Code promo", apply: "Appliquer", subtotal: "Sous-total", discount: "Remise", total: "Total", order_whatsapp: "Commander via WhatsApp", contact: "Contact", links: "Liens", rights: "Tous droits réservés.", add_to_cart: "Ajouter au panier", out_of_stock: "Rupture de stock", in_stock: "En stock", all: "Tout", remove: "Supprimer", edit: "Modifier", delete: "Supprimer", confirm_delete: "Êtes-vous sûr de vouloir supprimer?", saved_success: "Enregistré avec succès!", login_success: "Connexion réussie!", login_error: "Identifiant ou mot de passe incorrect", added_to_cart: "Ajouté au panier!", coupon_applied: "Code promo appliqué!", coupon_invalid: "Code promo invalide", cart_empty: "Votre panier est vide", order_summary: "Résumé de la commande", fill_required: "Veuillez remplir tous les champs requis" },
+  ar: { shop: "المتجر", admin: "المشرف", cart: "السلة", login: "تسجيل الدخول", cancel: "إلغاء", logout: "تسجيل الخروج", admin_login: "تسجيل دخول المشرف", username: "المعرف", password: "كلمة المرور", admin_panel: "لوحة التحكم", configuration: "الإعدادات", products: "المنتجات", categories: "الفئات", general_settings: "الإعدادات العامة", store_name: "اسم المتجر", whatsapp_number: "رقم واتساب", default_language: "اللغة الافتراضية", save: "حفظ", theme: "المظهر", primary_color: "اللون الأساسي", accent_color: "لون التمييز", background_color: "لون الخلفية", save_theme: "حفظ المظهر", hero_banner: "بانر الرئيسية", add_image: "إضافة", hero_hint: "اسحب لإعادة الترتيب. صورة واحدة على الأقل، 5+ موصى به", footer_info: "معلومات التذييل", company_name: "اسم الشركة", phone: "الهاتف", email: "البريد الإلكتروني", address: "العنوان", about_text: "نص حول", manage_products: "إدارة المنتجات", add_product: "إضافة", image: "الصورة", name: "الاسم", price: "السعر", stock: "المخزون", actions: "الإجراءات", image_url: "رابط الصورة", category: "الفئة", description: "الوصف", manage_categories: "إدارة الفئات", add_category: "إضافة فئة", hero_title: "اكشفي عن إشراقتك الطبيعية", hero_subtitle: "مستحضرات تجميل فاخرة لبشرة مشرقة", shop_now: "تسوقي الآن", our_products: "منتجاتنا", no_products: "لا توجد منتجات متاحة", coupon_code: "كود الخصم", apply: "تطبيق", subtotal: "المجموع الفرعي", discount: "الخصم", total: "المجموع", order_whatsapp: "اطلب عبر واتساب", contact: "اتصل بنا", links: "روابط", rights: "جميع الحقوق محفوظة", add_to_cart: "أضف إلى السلة", out_of_stock: "نفذ المخزون", in_stock: "متوفر", all: "الكل", remove: "إزالة", edit: "تعديل", delete: "حذف", confirm_delete: "هل أنت متأكد من الحذف؟", saved_success: "تم الحفظ بنجاح!", login_success: "تم تسجيل الدخول بنجاح!", login_error: "معرف أو كلمة مرور غير صحيحة", added_to_cart: "أضيف إلى السلة!", coupon_applied: "تم تطبيق كود الخصم!", coupon_invalid: "كود خصم غير صالح", cart_empty: "سلة التسوق فارغة", order_summary: "ملخص الطلب", fill_required: "يرجى ملء جميع الحقول المطلوبة" },
+  en: { shop: "Shop", admin: "Admin", cart: "Cart", login: "Login", cancel: "Cancel", logout: "Logout", admin_login: "Admin Login", username: "Username", password: "Password", admin_panel: "Admin Panel", configuration: "Configuration", products: "Products", categories: "Categories", general_settings: "General Settings", store_name: "Store Name", whatsapp_number: "WhatsApp Number", default_language: "Default Language", save: "Save", theme: "Theme", primary_color: "Primary Color", accent_color: "Accent Color", background_color: "Background Color", save_theme: "Save Theme", hero_banner: "Hero Banner", add_image: "Add", hero_hint: "Drag to reorder. Minimum 1 image, 5+ recommended.", footer_info: "Footer Information", company_name: "Company Name", phone: "Phone", email: "Email", address: "Address", about_text: "About Text", manage_products: "Manage Products", add_product: "Add", image: "Image", name: "Name", price: "Price", stock: "Stock", actions: "Actions", image_url: "Image URL", category: "Category", description: "Description", manage_categories: "Manage Categories", add_category: "Add Category", hero_title: "Reveal Your Natural Glow", hero_subtitle: "Premium cosmetics for radiant skin", shop_now: "Shop Now", our_products: "Our Products", no_products: "No products available", coupon_code: "Coupon Code", apply: "Apply", subtotal: "Subtotal", discount: "Discount", total: "Total", order_whatsapp: "Order via WhatsApp", contact: "Contact", links: "Links", rights: "All rights reserved.", add_to_cart: "Add to Cart", out_of_stock: "Out of Stock", in_stock: "In Stock", all: "All", remove: "Remove", edit: "Edit", delete: "Delete", confirm_delete: "Are you sure you want to delete?", saved_success: "Saved successfully!", login_success: "Login successful!", login_error: "Invalid username or password", added_to_cart: "Added to cart!", coupon_applied: "Coupon applied!", coupon_invalid: "Invalid coupon code", cart_empty: "Your cart is empty", order_summary: "Order Summary", fill_required: "Please fill all required fields" }
+};
 
-  const translations = { fr: { search: "Rechercher...", bestsellers: "Nos best-sellers", add: "Ajouter", added: "Ajouté au panier !", subscribed: "Merci !" }, en: { search: "Search...", bestsellers: "Best sellers", add: "Add", added: "Added to cart !", subscribed: "Thanks !" }, ar: { search: "ابحث...", bestsellers: "الأكثر مبيعاً", add: "أضف", added: "تمت الإضافة!", subscribed: "شكراً!" } };
+// State
+let STATE = {
+  admin: false, config: {}, products: [], categories: [], cart: [], coupon: null, currentLang: 'fr', heroIndex: 0, heroInterval: null, selectedCategory: 'all'
+};
+const DEFAULT_CONFIG = {
+  storeName: "Glow and Care", whatsappNumber: "+213776380744", defaultLang: "fr", primaryColor: "#ec4899", accentColor: "#8b5cf6", backgroundColor: "#fff1f2",
+  heroImages: ["https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&q=80", "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200&q=80", "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=1200&q=80", "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=1200&q=80"],
+  companyName: "Glow and Care", phone: "+213 776 380 744", email: "contact@glowcare.dz", address: "Alger, Algérie", aboutText: "Votre destination beauté pour des soins premium et naturels.", facebook: "#", instagram: "#"
+};
 
-  function showToast(msg) { const t = document.getElementById("toastMsg"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2000); }
-  function formatPrice(p) { return p + " DA"; }
-  function updateCartUI() {
-    let total = 0, count = 0;
-    const list = document.getElementById("cartItemsList");
-    list.innerHTML = "";
-    cart.forEach(item => {
-      const prod = products.find(p => p.id === item.id);
-      if (!prod) return;
-      total += prod.price * item.qty;
-      count += item.qty;
-      const li = document.createElement("li");
-      li.style.display = "flex"; li.style.justifyContent = "space-between"; li.style.marginBottom = "10px";
-      li.innerHTML = `<span>${prod.name} x${item.qty}</span><span>${prod.price * item.qty} DA <button class="remove-item" data-id="${item.id}">🗑️</button></span>`;
-      list.appendChild(li);
-    });
-    document.getElementById("cartTotal").innerText = total;
-    document.getElementById("cartCount").innerText = count;
-    document.getElementById("floatingCartCount").innerText = count;
-    document.querySelectorAll(".remove-item").forEach(btn => btn.addEventListener("click", (e) => { cart = cart.filter(i => i.id !== btn.dataset.id); updateCartUI(); showToast("Retiré"); }));
-  }
-  function addToCart(id) {
-    const prod = products.find(p => p.id === id);
-    if (!prod || prod.stock <= 0) { showToast("Stock épuisé"); return; }
-    const existing = cart.find(i => i.id === id);
-    if (existing) existing.qty++;
-    else cart.push({ id, qty: 1 });
-    updateCartUI(); showToast(translations[currentLang].added);
-  }
-  function renderProducts() {
-    let filtered = products;
-    if (activeFilter && activeFilter !== "all") filtered = products.filter(p => p.category === activeFilter);
-    const term = document.getElementById("searchInput").value.trim().toLowerCase();
-    if (term) filtered = filtered.filter(p => p.name.toLowerCase().includes(term));
-    if (!filtered.length) { document.getElementById("productsGrid").innerHTML = "<p>Aucun produit trouvé</p>"; return; }
-    document.getElementById("productsGrid").innerHTML = filtered.map(p => `<div class="product-card glass"><div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div><div class="product-info"><span class="brand">${p.brand || ""}</span><h3>${p.name}</h3><div class="price-row"><span class="price">${formatPrice(p.price)}</span><button class="add-btn" data-id="${p.id}">${translations[currentLang].add}</button></div></div></div>`).join("");
-    document.querySelectorAll(".add-btn").forEach(btn => btn.addEventListener("click", (e) => addToCart(btn.dataset.id)));
-  }
-  function renderCategories() {
-    const allCat = [{ id: "all", name: "Tous", icon: "🏠" }, ...categories];
-    const grid = document.getElementById("categoryGrid");
-    grid.innerHTML = allCat.map(c => `<div class="cat-item" data-cat="${c.id}"><div class="cat-icon">${c.icon || "📦"}</div><span>${c.name}</span></div>`).join("");
-    const nav = document.getElementById("navCategoriesList");
-    nav.innerHTML = allCat.map(c => `<a href="#" data-cat="${c.id}">${c.name}</a>`).join("");
-    document.querySelectorAll("[data-cat]").forEach(el => el.addEventListener("click", (e) => { e.preventDefault(); activeFilter = el.dataset.cat === "all" ? null : el.dataset.cat; renderProducts(); document.getElementById("productsTitle").innerText = activeFilter ? (categories.find(c=>c.id===activeFilter)?.name || "Catégorie") : translations[currentLang].bestsellers; }));
-  }
-  function buildHero() {
-    const slider = document.getElementById("heroSlider");
-    if (!heroSlides.length) return;
-    slider.innerHTML = heroSlides.map((h, i) => `<div class="hero-slide" data-index="${i}" style="background-image:url('${h.bg}');"><div class="hero-content"><h2>${h.t}</h2><p>${h.s}</p><button class="btn-primary">${h.b}</button></div></div>`).join("");
-    const dotsDiv = document.getElementById("heroDots");
-    dotsDiv.innerHTML = heroSlides.map((_, i) => `<button class="dot" data-dot="${i}"></button>`).join("");
-    document.querySelectorAll(".dot").forEach(dot => dot.addEventListener("click", (e) => showSlide(parseInt(dot.dataset.dot))));
-    showSlide(0);
-    if (slideInterval) clearInterval(slideInterval);
-    slideInterval = setInterval(() => { let n = (currentSlide + 1) % heroSlides.length; showSlide(n); }, 5000);
-  }
-  function showSlide(idx) {
-    const slides = document.querySelectorAll(".hero-slide");
-    const dots = document.querySelectorAll(".dot");
-    slides.forEach((s, i) => s.classList.toggle("active", i === idx));
-    dots.forEach((d, i) => d.classList.toggle("active", i === idx));
-    currentSlide = idx;
-  }
-  async function loadSiteConfig() {
-    const configRef = ref(db, 'siteConfig');
-    const snapshot = await get(configRef);
-    if (snapshot.exists()) siteConfig = snapshot.val();
-    else siteConfig = { whatsapp: "+213 776 38 07 44", email: "contact@glowandcare.dz", contactText: "Algérie\ncontact@glowandcare.dz\n+213 776 38 07 44" };
-    document.getElementById("footerContactText").innerHTML = siteConfig.contactText?.replace(/\n/g, "<br>") || "Algérie<br>contact@glowandcare.dz<br>+213 776 38 07 44";
-    document.getElementById("checkoutBtn").onclick = () => {
-      if (!cart.length) { showToast("Panier vide"); return; }
-      let msg = "Bonjour, je souhaite commander :%0A";
-      cart.forEach(i => { let p = products.find(pr => pr.id === i.id); if(p) msg += `- ${p.name} x${i.qty} : ${p.price * i.qty} DA%0A`; });
-      let total = cart.reduce((s,i)=> { let p = products.find(pr=>pr.id===i.id); return s + (p ? p.price * i.qty : 0); },0);
-      msg += `%0ATotal : ${total} DA%0AMerci !`;
-      window.open(`https://wa.me/${siteConfig.whatsapp?.replace(/[^0-9+]/g, '') || "213776380744"}?text=${msg}`, "_blank");
-    };
-  }
+function loadData() {
+  STATE.config = JSON.parse(localStorage.getItem('gc_config')) || JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+  STATE.products = JSON.parse(localStorage.getItem('gc_products')) || [];
+  STATE.categories = JSON.parse(localStorage.getItem('gc_categories')) || [];
+  STATE.cart = JSON.parse(localStorage.getItem('gc_cart')) || [];
+  STATE.currentLang = localStorage.getItem('gc_lang') || STATE.config.defaultLang || 'fr';
+  if (!STATE.categories.length) STATE.categories = [{ id: 1, name: { fr: "Soins Visage", ar: "العناية بالوجه", en: "Face Care" } }, { id: 2, name: { fr: "Maquillage", ar: "مكياج", en: "Makeup" } }];
+  if (!STATE.products.length) STATE.products = [{ id: 1, name: "Sérum Vitamine C", price: 3500, stock: 15, categoryId: 1, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80", description: "Sérum éclat à la vitamine C pure" }, { id: 2, name: "Crème Hydratante", price: 2800, stock: 20, categoryId: 1, image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&q=80", description: "Hydratation intense 24h" }];
+  saveData('config'); saveData('products'); saveData('categories'); saveData('cart');
+}
+function saveData(key) { localStorage.setItem(`gc_${key}`, JSON.stringify(STATE[key])); }
+function t(key) { return I18N[STATE.currentLang][key] || key; }
+function formatPrice(p) { return `${p.toLocaleString()} DA`; }
+function showToast(msg, type = 'success') { const t = document.createElement('div'); t.className = `toast px-6 py-3 rounded-lg shadow-lg text-white font-medium ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`; t.textContent = msg; document.getElementById('toastContainer').appendChild(t); setTimeout(() => t.remove(), 3000); }
+const $ = (s) => document.querySelector(s); const $$ = (s) => document.querySelectorAll(s);
 
-  onValue(ref(db, 'products'), (snap) => { products = snap.exists() ? Object.entries(snap.val()).map(([id,val]) => ({id, ...val})) : []; renderProducts(); });
-  onValue(ref(db, 'categories'), (snap) => { categories = snap.exists() ? Object.entries(snap.val()).map(([id,val]) => ({id, ...val})) : []; renderCategories(); });
-  onValue(ref(db, 'hero'), (snap) => { heroSlides = snap.exists() ? Object.values(snap.val()) : []; buildHero(); });
-  onValue(ref(db, 'siteConfig'), () => loadSiteConfig());
+function applyTheme() { document.documentElement.style.setProperty('--primary', STATE.config.primaryColor); document.documentElement.style.setProperty('--accent', STATE.config.accentColor); document.documentElement.style.setProperty('--background', STATE.config.backgroundColor); }
+function applyTranslations() { $$('[data-i18n]').forEach(el => { if (I18N[STATE.currentLang][el.dataset.i18n]) el.textContent = I18N[STATE.currentLang][el.dataset.i18n]; }); document.body.classList.toggle('rtl', STATE.currentLang === 'ar'); document.documentElement.dir = STATE.currentLang === 'ar' ? 'rtl' : 'ltr'; $('#langSwitcher').value = STATE.currentLang; }
+function updateStorefront() { $('#storeName').textContent = STATE.config.storeName; $('#footerCompanyName').textContent = STATE.config.companyName; $('#footerAbout').textContent = STATE.config.aboutText; $('#footerPhone').textContent = STATE.config.phone; $('#footerEmail').textContent = STATE.config.email; $('#footerAddress').textContent = STATE.config.address; $('#footerCopyName').textContent = STATE.config.companyName; $('#footerFacebook').href = STATE.config.facebook; $('#footerInstagram').href = STATE.config.instagram; }
 
-  document.getElementById("heroPrev")?.addEventListener("click", () => { let p = (currentSlide - 1 + heroSlides.length) % heroSlides.length; showSlide(p); });
-  document.getElementById("heroNext")?.addEventListener("click", () => { let n = (currentSlide + 1) % heroSlides.length; showSlide(n); });
-  document.getElementById("openCartBtn").addEventListener("click", () => document.getElementById("cartDrawer").style.transform = "translateX(0)");
-  document.getElementById("floatingCartBtn").addEventListener("click", () => document.getElementById("cartDrawer").style.transform = "translateX(0)");
-  document.getElementById("closeCartBtn").addEventListener("click", () => document.getElementById("cartDrawer").style.transform = "translateX(100%)");
-  document.getElementById("newsletterForm").addEventListener("submit", (e) => { e.preventDefault(); showToast(translations[currentLang].subscribed); e.target.reset(); });
-  document.getElementById("searchInput").addEventListener("input", () => renderProducts());
-  document.getElementById("menuToggleBtn").addEventListener("click", () => document.getElementById("navMenu").classList.toggle("open"));
-  document.getElementById("langBtn").addEventListener("click", () => document.getElementById("langDropdown").classList.toggle("show"));
-  document.querySelectorAll("[data-lang]").forEach(btn => btn.addEventListener("click", () => { currentLang = btn.dataset.lang; document.documentElement.lang = currentLang; document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr"; document.getElementById("langBtn").innerHTML = currentLang === "fr" ? "🇫🇷 FR ▼" : currentLang === "en" ? "🇬🇧 EN ▼" : "🇸🇦 عربي ▼"; document.getElementById("searchInput").placeholder = translations[currentLang].search; document.getElementById("productsTitle").innerText = translations[currentLang].bestsellers; renderProducts(); document.getElementById("langDropdown").classList.remove("show"); }));
-  loadSiteConfig();
+function renderHeroCarousel() {
+  const carousel = $('#heroCarousel'); const dots = $('#heroDots'); carousel.innerHTML = ''; dots.innerHTML = '';
+  STATE.config.heroImages.forEach((img, idx) => { const slide = document.createElement('div'); slide.className = `hero-slide absolute inset-0 ${idx === 0 ? 'opacity-100' : 'opacity-0'}`; slide.innerHTML = `<img src="${img}" alt="Hero" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/1200x600/ec4899/fff?text=Glow+Care'">`; carousel.appendChild(slide); const dot = document.createElement('button'); dot.className = `w-2 h-2 rounded-full transition-all ${idx === 0 ? 'bg-white w-8' : 'bg-white/50'}`; dot.onclick = () => setHeroSlide(idx); dots.appendChild(dot); });
+  if (STATE.heroInterval) clearInterval(STATE.heroInterval);
+  STATE.heroInterval = setInterval(() => { STATE.heroIndex = (STATE.heroIndex + 1) % STATE.config.heroImages.length; setHeroSlide(STATE.heroIndex); }, 5000);
+}
+function setHeroSlide(idx) { STATE.heroIndex = idx; const slides = $$('.hero-slide'), dots = $('#heroDots').children; slides.forEach((s, i) => s.style.opacity = i === idx ? '1' : '0'); Array.from(dots).forEach((d, i) => d.className = `w-2 h-2 rounded-full transition-all ${i === idx ? 'bg-white w-8' : 'bg-white/50'}`); }
+
+function renderCategories() {
+  const container = $('#categoryFilters'); container.innerHTML = `<button class="px-5 py-2 rounded-full font-medium transition ${STATE.selectedCategory === 'all' ? 'bg-primary text-white' : 'bg-white shadow-sm hover:shadow-md'}" onclick="filterProducts('all')">${t('all')}</button>`;
+  STATE.categories.forEach(cat => { const btn = document.createElement('button'); btn.className = `px-5 py-2 rounded-full font-medium transition ${STATE.selectedCategory === cat.id ? 'bg-primary text-white' : 'bg-white shadow-sm hover:shadow-md'}`; btn.textContent = cat.name[STATE.currentLang] || cat.name.fr; btn.onclick = () => filterProducts(cat.id); container.appendChild(btn); });
+}
+function filterProducts(catId) { STATE.selectedCategory = catId; renderCategories(); renderProducts(); }
+function renderProducts() {
+  const grid = $('#productsGrid'); const filtered = STATE.selectedCategory === 'all' ? STATE.products : STATE.products.filter(p => p.categoryId === STATE.selectedCategory);
+  if (!filtered.length) { grid.innerHTML = ''; $('#noProducts').classList.remove('hidden'); return; }
+  $('#noProducts').classList.add('hidden'); grid.innerHTML = filtered.map(p => `<div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group"><div class="aspect-square overflow-hidden bg-gray-100"><img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x400/ec4899/fff?text=Product'"></div><div class="p-4"><h4 class="font-semibold mb-1 line-clamp-1">${p.name}</h4><p class="text-sm text-gray-600 mb-3 line-clamp-2">${p.description}</p><div class="flex items-center justify-between mb-3"><span class="text-xl font-bold text-primary">${formatPrice(p.price)}</span><span class="text-xs px-2 py-1 rounded-full ${p.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${p.stock > 0 ? t('in_stock') : t('out_of_stock')}</span></div><button onclick="addToCart(${p.id})" ${p.stock === 0 ? 'disabled' : ''} class="btn-primary w-full text-white py-2.5 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"><i class="fa-solid fa-cart-plus mr-2"></i>${t('add_to_cart')}</button></div></div>`).join('');
+}
+
+function addToCart(id) { const p = STATE.products.find(p => p.id === id); if (!p || p.stock === 0) return; const existing = STATE.cart.find(i => i.id === id); if (existing) { if (existing.qty < p.stock) existing.qty++; } else STATE.cart.push({ id, qty: 1 }); saveData('cart'); updateCartUI(); showToast(t('added_to_cart')); }
+function updateCartUI() {
+  const totalQty = STATE.cart.reduce((s, i) => s + i.qty, 0); $('#cartCount').classList.toggle('hidden', totalQty === 0); $('#cartCount').textContent = totalQty;
+  const container = $('#cartItems'); if (!STATE.cart.length) container.innerHTML = `<div class="text-center py-12 text-gray-500"><i class="fa-solid fa-cart-shopping text-5xl mb-4"></i><p>${t('cart_empty')}</p></div>`;
+  else container.innerHTML = STATE.cart.map(item => { const p = STATE.products.find(p => p.id === item.id); if (!p) return ''; return `<div class="flex gap-4 pb-4 border-b"><img src="${p.image}" class="w-20 h-20 rounded-lg object-cover"><div class="flex-1"><h4 class="font-semibold mb-1">${p.name}</h4><p class="text-sm text-gray-600 mb-2">${formatPrice(p.price)}</p><div class="flex items-center gap-2"><button onclick="updateCartQty(${item.id}, -1)" class="w-7 h-7 rounded border-gray-300 hover:bg-gray-100"><i class="fa-solid fa-minus text-xs"></i></button><span class="w-8 text-center font-semibold">${item.qty}</span><button onclick="updateCartQty(${item.id}, 1)" class="w-7 h-7 rounded border border-gray-300 hover:bg-gray-100"><i class="fa-solid fa-plus text-xs"></i></button><button onclick="removeFromCart(${item.id})" class="ml-auto text-red-500 hover:text-red-700"><i class="fa-solid fa-trash"></i></button></div></div></div>`; }).join('');
+  calculateCartTotal();
+}
+function updateCartQty(id, d) { const item = STATE.cart.find(i => i.id === id); const p = STATE.products.find(p => p.id === id); if (!item || !p) return; item.qty += d; if (item.qty <= 0) removeFromCart(id); else if (item.qty > p.stock) item.qty = p.stock; saveData('cart'); updateCartUI(); }
+function removeFromCart(id) { STATE.cart = STATE.cart.filter(i => i.id !== id); saveData('cart'); updateCartUI(); }
+function calculateCartTotal() { const subtotal = STATE.cart.reduce((s, i) => { const p = STATE.products.find(p => p.id === i.id); return s + (p ? p.price * i.qty : 0); }, 0); let discount = 0; if (STATE.coupon === 'GLOW10') discount = subtotal * 0.1; const total = subtotal - discount; $('#cartSubtotal').textContent = formatPrice(subtotal); $('#cartTotal').textContent = formatPrice(total); if (discount > 0) { $('#discountRow').classList.remove('hidden'); $('#cartDiscount').textContent = `-${formatPrice(discount)}`; } else $('#discountRow').classList.add('hidden'); }
+function applyCoupon() { const code = $('#couponInput').value.trim().toUpperCase(); if (code === 'GLOW10') { STATE.coupon = code; $('#couponMsg').textContent = t('coupon_applied'); $('#couponMsg').className = 'text-sm mt-1 text-green-600'; showToast(t('coupon_applied')); } else { STATE.coupon = null; $('#couponMsg').textContent = t('coupon_invalid'); $('#couponMsg').className = 'text-sm mt-1 text-red-600'; } calculateCartTotal(); }
+function checkout() { if (!STATE.cart.length) { showToast(t('cart_empty'), 'error'); return; } let msg = `${t('order_summary')} - ${STATE.config.storeName}\n\n`; let subtotal = 0; STATE.cart.forEach(item => { const p = STATE.products.find(p => p.id === item.id); if (p) { const line = p.price * item.qty; subtotal += line; msg += `${p.name} x${item.qty} - ${formatPrice(line)}\n`; } }); let discount = 0; if (STATE.coupon === 'GLOW10') discount = subtotal * 0.1; const total = subtotal - discount; if (discount > 0) msg += `\n${t('discount')} (GLOW10): -${formatPrice(discount)}`; msg += `\n\n${t('total')}: ${formatPrice(total)}`; window.open(`https://wa.me/${STATE.config.whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank'); }
+
+function login(e) { e.preventDefault(); if ($('#adminId').value === 'admin' && $('#adminPass').value === 'glow2026') { STATE.admin = true; $('#loginModal').classList.add('hidden'); showAdminView(); showToast(t('login_success')); } else showToast(t('login_error'), 'error'); }
+function logout() { STATE.admin = false; showStorefront(); showToast('Déconnecté'); }
+function showAdminView() { $('#storefrontView').classList.add('hidden'); $('#adminView').classList.remove('hidden'); loadAdminConfig(); renderAdminProducts(); renderAdminCategories(); renderHeroImagesList(); }
+function showStorefront() { $('#adminView').classList.add('hidden'); $('#storefrontView').classList.remove('hidden'); renderHeroCarousel(); renderCategories(); renderProducts(); updateStorefront(); }
+function loadAdminConfig() { $('#configStoreName').value = STATE.config.storeName; $('#configWhatsapp').value = STATE.config.whatsappNumber; $('#configDefaultLang').value = STATE.config.defaultLang; $('#configPrimaryColor').value = $('#configPrimaryColorText').value = STATE.config.primaryColor; $('#configAccentColor').value = $('#configAccentColorText').value = STATE.config.accentColor; $('#configBgColor').value = $('#configBgColorText').value = STATE.config.backgroundColor; $('#configCompanyName').value = STATE.config.companyName; $('#configPhone').value = STATE.config.phone; $('#configEmail').value = STATE.config.email; $('#configAddress').value = STATE.config.address; $('#configAbout').value = STATE.config.aboutText; $('#configFacebook').value = STATE.config.facebook; $('#configInstagram').value = STATE.config.instagram; }
+function saveGeneral() { if (!$('#configStoreName').value.trim() || !$('#configWhatsapp').value.trim()) { showToast(t('fill_required'), 'error'); return; } STATE.config.storeName = $('#configStoreName').value.trim(); STATE.config.whatsappNumber = $('#configWhatsapp').value.trim(); STATE.config.defaultLang = $('#configDefaultLang').value; saveData('config'); updateStorefront(); showToast(t('saved_success')); }
+function saveTheme() { STATE.config.primaryColor = $('#configPrimaryColor').value; STATE.config.accentColor = $('#configAccentColor').value; STATE.config.backgroundColor = $('#configBgColor').value; saveData('config'); applyTheme(); showToast(t('saved_success')); }
+function saveFooter() { STATE.config.companyName = $('#configCompanyName').value.trim(); STATE.config.phone = $('#configPhone').value.trim(); STATE.config.email = $('#configEmail').value.trim(); STATE.config.address = $('#configAddress').value.trim(); STATE.config.aboutText = $('#configAbout').value.trim(); STATE.config.facebook = $('#configFacebook').value.trim(); STATE.config.instagram = $('#configInstagram').value.trim(); saveData('config'); updateStorefront(); showToast(t('saved_success')); }
+function renderHeroImagesList() { const container = $('#heroImagesList'); container.innerHTML = STATE.config.heroImages.map((url, idx) => `<div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg" data-idx="${idx}"><i class="fa-solid fa-grip-vertical drag-handle text-gray-400"></i><img src="${url}" class="w-16 h-16 rounded object-cover"><input type="url" value="${url}" class="flex-1 px-3 py-2 rounded border border-gray-300 text-sm" onchange="updateHeroImage(${idx}, this.value)"><button onclick="removeHeroImage(${idx})" class="text-red-500 hover:text-red-700 px-3"><i class="fa-solid fa-trash"></i></button></div>`).join(''); new Sortable(container, { handle: '.drag-handle', animation: 150, onEnd: (evt) => { const item = STATE.config.heroImages.splice(evt.oldIndex, 1)[0]; STATE.config.heroImages.splice(evt.newIndex, 0, item); saveData('config'); renderHeroImagesList(); renderHeroCarousel(); } }); }
+function addHeroImage() { const url = $('#newHeroImageUrl').value.trim(); if (!url) return; try { new URL(url); STATE.config.heroImages.push(url); saveData('config'); $('#newHeroImageUrl').value = ''; renderHeroImagesList(); renderHeroCarousel(); showToast(t('saved_success')); } catch { showToast('URL invalide', 'error'); } }
+function updateHeroImage(idx, url) { try { new URL(url); STATE.config.heroImages[idx] = url; saveData('config'); renderHeroCarousel(); showToast(t('saved_success')); } catch { showToast('URL invalide', 'error'); renderHeroImagesList(); } }
+function removeHeroImage(idx) { if (STATE.config.heroImages.length <= 1) { showToast('Minimum 1 image requise', 'error'); return; } if (confirm(t('confirm_delete'))) { STATE.config.heroImages.splice(idx, 1); saveData('config'); renderHeroImagesList(); renderHeroCarousel(); showToast(t('saved_success')); } }
+function renderAdminProducts() { const tbody = $('#productsTable'); tbody.innerHTML = STATE.products.map(p => `<tr class="border-b hover:bg-gray-50"><td class="px-4 py-3"><img src="${p.image}" class="w-12 h-12 rounded object-cover"></td><td class="px-4 py-3 font-medium">${p.name}</td><td class="px-4 py-3">${formatPrice(p.price)}</td><td class="px-4 py-3">${p.stock}</td><td class="px-4 py-3"><button onclick="editProduct(${p.id})" class="text-blue-600 hover:text-blue-800 mr-3"><i class="fa-solid fa-pen"></i></button><button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button></td></tr>`).join(''); }
+function showProductModal(product = null) { $('#productCategory').innerHTML = STATE.categories.map(c => `<option value="${c.id}">${c.name[STATE.currentLang] || c.name.fr}</option>`).join(''); if (product) { $('#productModalTitle').textContent = t('edit'); $('#productId').value = product.id; $('#productImage').value = product.image; $('#productName').value = product.name; $('#productPrice').value = product.price; $('#productStock').value = product.stock; $('#productCategory').value = product.categoryId; $('#productDescription').value = product.description; } else { $('#productModalTitle').textContent = t('add_product'); $('#productId').value = ''; $('#productForm').reset(); } $('#productModal').classList.remove('hidden'); $('#productModal').classList.add('flex'); }
+function closeProductModal() { $('#productModal').classList.add('hidden'); $('#productModal').classList.remove('flex'); }
+function saveProduct(e) { e.preventDefault(); const id = $('#productId').value; const product = { id: id ? parseInt(id) : Date.now(), image: $('#productImage').value.trim(), name: $('#productName').value.trim(), price: parseFloat($('#productPrice').value), stock: parseInt($('#productStock').value), categoryId: parseInt($('#productCategory').value), description: $('#productDescription').value.trim() }; if (!product.name || !product.image) { showToast(t('fill_required'), 'error'); return; } if (id) { const idx = STATE.products.findIndex(p => p.id === product.id); STATE.products[idx] = product; } else STATE.products.push(product); saveData('products'); renderAdminProducts(); renderProducts(); closeProductModal(); showToast(t('saved_success')); }
+function editProduct(id) { const p = STATE.products.find(p => p.id === id); if (p) showProductModal(p); }
+function deleteProduct(id) { if (confirm(t('confirm_delete'))) { STATE.products = STATE.products.filter(p => p.id !== id); saveData('products'); renderAdminProducts(); renderProducts(); showToast(t('saved_success')); } }
+function renderAdminCategories() { $('#categoriesList').innerHTML = STATE.categories.map(cat => `<div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"><div><p class="font-semibold">${cat.name.fr}</p><p class="text-sm text-gray-600">${cat.name.ar} / ${cat.name.en}</p></div><div><button onclick="editCategory(${cat.id})" class="text-blue-600 hover:text-blue-800 px-3 py-2"><i class="fa-solid fa-pen"></i></button><button onclick="deleteCategory(${cat.id})" class="text-red-600 hover:text-red-800 px-3 py-2"><i class="fa-solid fa-trash"></i></button></div></div>`).join(''); }
+function showCategoryModal(category = null) { if (category) { $('#categoryModalTitle').textContent = t('edit'); $('#categoryId').value = category.id; $('#categoryNameFR').value = category.name.fr; $('#categoryNameAR').value = category.name.ar; $('#categoryNameEN').value = category.name.en; } else { $('#categoryModalTitle').textContent = t('add_category'); $('#categoryId').value = ''; $('#categoryForm').reset(); } $('#categoryModal').classList.remove('hidden'); $('#categoryModal').classList.add('flex'); }
+function closeCategoryModal() { $('#categoryModal').classList.add('hidden'); $('#categoryModal').classList.remove('flex'); }
+function saveCategory(e) { e.preventDefault(); const id = $('#categoryId').value; const cat = { id: id ? parseInt(id) : Date.now(), name: { fr: $('#categoryNameFR').value.trim(), ar: $('#categoryNameAR').value.trim(), en: $('#categoryNameEN').value.trim() } }; if (!cat.name.fr || !cat.name.ar || !cat.name.en) { showToast(t('fill_required'), 'error'); return; } if (id) { const idx = STATE.categories.findIndex(c => c.id === cat.id); STATE.categories[idx] = cat; } else STATE.categories.push(cat); saveData('categories'); renderAdminCategories(); renderCategories(); closeCategoryModal(); showToast(t('saved_success')); }
+function editCategory(id) { const cat = STATE.categories.find(c => c.id === id); if (cat) showCategoryModal(cat); }
+function deleteCategory(id) { if (STATE.products.some(p => p.categoryId === id)) { showToast('Catégorie utilisée par des produits', 'error'); return; } if (confirm(t('confirm_delete'))) { STATE.categories = STATE.categories.filter(c => c.id !== id); saveData('categories'); renderAdminCategories(); renderCategories(); showToast(t('saved_success')); } }
+function switchAdminTab(tab) { $$('.admin-tab').forEach(t => { if (t.dataset.tab === tab) { t.classList.add('border-primary', 'text-primary'); t.classList.remove('text-gray-600'); } else { t.classList.remove('border-primary', 'text-primary'); t.classList.add('text-gray-600'); } }); $$('.admin-tab-content').forEach(c => c.classList.add('hidden')); $(`#tab-${tab}`).classList.remove('hidden'); }
+
+function init() {
+  loadData(); applyTheme(); applyTranslations(); updateStorefront(); renderHeroCarousel(); renderCategories(); renderProducts(); updateCartUI();
+  $('#loginForm').addEventListener('submit', login); $('#closeLogin').addEventListener('click', () => $('#loginModal').classList.add('hidden'));
+  $$('#adminLink, #adminLinkMobile, #footerAdminLink').forEach(el => el.addEventListener('click', () => STATE.admin ? showAdminView() : $('#loginModal').classList.remove('hidden')));
+  $('#logoutBtn').addEventListener('click', logout); $('#mobileMenuBtn').addEventListener('click', () => $('#mobileMenu').classList.toggle('hidden'));
+  $$('.nav-link').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); showStorefront(); $('#mobileMenu').classList.add('hidden'); }));
+  $('#shopNowBtn').addEventListener('click', () => document.querySelector('#productsGrid').scrollIntoView({ behavior: 'smooth' }));
+  $('#langSwitcher').addEventListener('change', (e) => { STATE.currentLang = e.target.value; localStorage.setItem('gc_lang', STATE.currentLang); applyTranslations(); renderCategories(); renderProducts(); });
+  $('#cartBtn').addEventListener('click', () => { $('#cartSidebar').classList.remove('translate-x-full'); $('#cartOverlay').classList.remove('hidden'); });
+  $$('#closeCart, #cartOverlay').forEach(el => el.addEventListener('click', () => { $('#cartSidebar').classList.add('translate-x-full'); $('#cartOverlay').classList.add('hidden'); }));
+  $('#applyCoupon').addEventListener('click', applyCoupon); $('#checkoutBtn').addEventListener('click', checkout);
+  $$('.admin-tab').forEach(tab => tab.addEventListener('click', () => switchAdminTab(tab.dataset.tab)));
+  $('#saveGeneral').addEventListener('click', saveGeneral); $('#saveTheme').addEventListener('click', saveTheme); $('#saveFooter').addEventListener('click', saveFooter);
+  $$('#configPrimaryColor, #configPrimaryColorText').forEach(el => el.addEventListener('input', (e) => { $('#configPrimaryColor').value = $('#configPrimaryColorText').value = e.target.value; STATE.config.primaryColor = e.target.value; applyTheme(); }));
+  $$('#configAccentColor, #configAccentColorText').forEach(el => el.addEventListener('input', (e) => { $('#configAccentColor').value = $('#configAccentColorText').value = e.target.value; STATE.config.accentColor = e.target.value; applyTheme(); }));
+  $$('#configBgColor, #configBgColorText').forEach(el => el.addEventListener('input', (e) => { $('#configBgColor').value = $('#configBgColorText').value = e.target.value; STATE.config.backgroundColor = e.target.value; applyTheme(); }));
+  $('#addHeroImage').addEventListener('click', addHeroImage); $('#addProductBtn').addEventListener('click', () => showProductModal());
+  $('#productForm').addEventListener('submit', saveProduct); $$('#closeProductModal, #cancelProduct').forEach(el => el.addEventListener('click', closeProductModal));
+  $('#addCategoryBtn').addEventListener('click', () => showCategoryModal()); $('#categoryForm').addEventListener('submit', saveCategory); $$('#closeCategoryModal, #cancelCategory').forEach(el => el.addEventListener('click', closeCategoryModal));
+}
+window.addToCart = addToCart; window.updateCartQty = updateCartQty; window.removeFromCart = removeFromCart; window.updateHeroImage = updateHeroImage; window.removeHeroImage = removeHeroImage; window.editProduct = editProduct; window.deleteProduct = deleteProduct; window.editCategory = editCategory; window.deleteCategory = deleteCategory; window.filterProducts = filterProducts;
+init();
 </script>
 </body>
 </html>
